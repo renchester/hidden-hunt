@@ -9,6 +9,7 @@ import {
 
 import App from './App';
 import HomePage from './pages/HomePage';
+import GamePage from './pages/GamePage';
 
 import './css/index.css';
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<HomePage />} />
+      <Route path=":mapType" element={<GamePage />} />
     </Route>,
   ),
 );
