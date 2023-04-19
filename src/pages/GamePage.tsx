@@ -2,14 +2,19 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CharacterProvider } from '../hooks/useCharacters';
+import ImageMap from '../components/ImageMap';
+import Overlay from '../components/Overlay';
+import GameStartModal from '../components/GameStartModal';
+import HeaderInGame from '../components/HeaderInGame';
+
 import { type CharacterInMap, type Map, type MapType } from '../types/types';
 import gameData from '../data/gameData';
-import ImageMap from '../components/ImageMap';
 
 function GamePage() {
   const { mapType } = useParams<{ mapType: MapType }>();
 
   const [currentGame, setCurrentGame] = useState<Map | null>(null);
+  const [isGameStart, setGameStart] = useState(false);
   const [mapCharacters, setMapCharacters] = useState<CharacterInMap[]>();
 
   useEffect(() => {
@@ -25,15 +30,24 @@ function GamePage() {
   }, [currentGame]);
 
   return (
-    currentGame &&
-    mapType &&
-    mapCharacters && (
-      <main className="mx-auto">
+    <>
+      {currentGame && mapType && mapCharacters && (
         <CharacterProvider mapCharacters={mapCharacters}>
-          <ImageMap currentGame={currentGame} mapType={mapType} />
+          <HeaderInGame isGameStart={isGameStart} />
+          <main className="mx-auto">
+            <ImageMap currentGame={currentGame} mapType={mapType} />
+          </main>
         </CharacterProvider>
-      </main>
-    )
+      )}
+      {currentGame && !isGameStart && (
+        <Overlay>
+          <GameStartModal
+            currentGame={currentGame}
+            setGameStart={setGameStart}
+          />
+        </Overlay>
+      )}
+    </>
   );
 }
 export default GamePage;
