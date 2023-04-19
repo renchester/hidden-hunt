@@ -16,7 +16,7 @@ function ImageMap(props: ImageMapProps) {
   const { currentGame, mapType } = props;
 
   const { characters, setCharacters } = useCharacters();
-  const [isMenuShown, setMenuShowStatus] = useState(false);
+  const [isContextMenuShown, setContextMenuVisibility] = useState(false);
   const [clickedCoordinates, setClickedCoordinates] = useState<Coordinates>();
 
   const mapRef = useRef<HTMLImageElement>(null);
@@ -69,14 +69,14 @@ function ImageMap(props: ImageMapProps) {
       const clickY = ((e.clientY - mapRect.y) / mapRect.height) * 100;
 
       setClickedCoordinates(() => ({ x: clickX, y: clickY }));
-      setMenuShowStatus(() => true);
+      setContextMenuVisibility(() => true);
     }
   };
 
-  const hideMenu = () => setMenuShowStatus(false);
+  const hideContextMenu = () => setContextMenuVisibility(false);
 
   return (
-    <div className="relative" onBlur={hideMenu}>
+    <div className="relative" onBlur={hideContextMenu}>
       <div className="expandable absolute"></div>
       <img
         ref={mapRef}
@@ -85,9 +85,10 @@ function ImageMap(props: ImageMapProps) {
         className="mx-auto"
         onClick={handleImageClick}
       />
-      {isMenuShown && clickedCoordinates && (
+
+      {isContextMenuShown && clickedCoordinates && (
         <ContextMenu
-          hideMenu={hideMenu}
+          hideMenu={hideContextMenu}
           clickedCoordinates={clickedCoordinates}
           matchCharacterToCoords={matchCharacterToCoords}
         />
