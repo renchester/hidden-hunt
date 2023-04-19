@@ -1,11 +1,15 @@
-export type Character = {
+export interface Character {
   id: string;
   name: string;
   img: string;
   isGnome?: boolean;
-};
+}
 
-export type Map = {
+export interface CharacterInMap extends Character {
+  isFound: boolean;
+}
+
+export interface Map {
   id: string;
   type: string;
   title: string;
@@ -15,4 +19,11 @@ export type Map = {
   instructions: string;
   characters: Character[];
   previewCharacters?: Character[];
-};
+}
+
+export interface Coordinates {
+  x: number;
+  y: number;
+}
+
+export type MapType = 'space' | 'street' | 'party';
