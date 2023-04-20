@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CharacterProvider } from '../hooks/useCharacters';
+import { TimeLapsedProvider } from '../hooks/useTime';
+
 import ImageMap from '../components/ImageMap';
 import Overlay from '../components/Overlay';
 import GameStartModal from '../components/GameStartModal';
@@ -30,7 +32,7 @@ function GamePage() {
   }, [currentGame]);
 
   return (
-    <>
+    <TimeLapsedProvider>
       {currentGame && mapType && mapCharacters && (
         <CharacterProvider mapCharacters={mapCharacters}>
           <HeaderInGame isGameStart={isGameStart} />
@@ -47,7 +49,7 @@ function GamePage() {
           />
         </Overlay>
       )}
-    </>
+    </TimeLapsedProvider>
   );
 }
 export default GamePage;
