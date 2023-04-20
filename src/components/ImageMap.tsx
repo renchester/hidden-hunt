@@ -1,9 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-
-import getCoordsFromDB from '../api/getCoordsFromDB';
-import { useCharacters } from '../hooks/useCharacters';
-import isWithinDegrees from '../utils/isWithinDegrees';
-
 import type {
   Map,
   MapType,
@@ -11,9 +6,18 @@ import type {
   CharacterPopupData,
   CharacterInMap,
 } from '../types/types';
+
+import { useTime } from '../hooks/useTime';
+import { useCharacters } from '../hooks/useCharacters';
+
 import ContextMenu from './ContextMenu';
 import CharacterPopup from './CharacterPopup';
+import Overlay from './Overlay';
+import GameWinModal from './GameWinModal';
+
+import getCoordsFromDB from '../api/getCoordsFromDB';
 import getGnomeCoordsFromDb from '../api/getGnomeCoordsFromDb';
+import isWithinDegrees from '../utils/isWithinDegrees';
 
 type ImageMapProps = {
   currentGame: Map;
@@ -22,10 +26,14 @@ type ImageMapProps = {
 
 function ImageMap(props: ImageMapProps) {
   const { currentGame, mapType } = props;
+  const { clearStopwatchInterval } = useTime();
 
   const { characters, setCharacters } = useCharacters();
   const [isContextMenuShown, setContextMenuVisibility] = useState(false);
   const [isPopupShown, setPopupVisibility] = useState(false);
+  const [isGameWinModalShown, setGameWinModalVisibility] = useState(false);
+  const [allCharactersFound, setAllCharactersFound] = useState(false);
+
   const [characterPopupData, setCharacterPopupData] =
     useState<CharacterPopupData>();
   const [clickedCoordinates, setClickedCoordinates] = useState<Coordinates>();
@@ -35,7 +43,9 @@ function ImageMap(props: ImageMapProps) {
   useEffect(() => {
     if (characters.every((ch) => ch.isFound)) {
       // Print winner modal
-      console.log('all found');
+      clearStopwatchInterval();
+      setAllCharactersFound(true);
+      setGameWinModalVisibility(true);
     }
   }, [characters]);
 
@@ -172,6 +182,14 @@ function ImageMap(props: ImageMapProps) {
 
       {isPopupShown && characterPopupData && (
         <CharacterPopup data={characterPopupData} hidePopup={hidePopup} />
+      )}
+
+      {allCharactersFound && (
+        <Overlay>
+          {isGameWinModalShown && (
+            <GameWinModal isWinner={allCharactersFound} />
+          )}
+        </Overlay>
       )}
     </div>
   );
