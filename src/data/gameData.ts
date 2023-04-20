@@ -178,6 +178,7 @@ const gameData: Map[] = [
         id: 'party-gnome',
         name: 'Gnome',
         img: gnomeImg,
+        isGnome: true,
       },
     ],
   },
