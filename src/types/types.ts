@@ -39,3 +39,11 @@ export interface GnomeCoords {
   y: number;
   isGnome: boolean;
 }
+
+export interface TimeLapsed {
+  actualTime: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  centiseconds: number;
+}
