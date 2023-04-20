@@ -4,8 +4,16 @@ import getCoordsFromDB from '../api/getCoordsFromDB';
 import { useCharacters } from '../hooks/useCharacters';
 import isWithinDegrees from '../utils/isWithinDegrees';
 
-import { type Map, type MapType, type Coordinates } from '../types/types';
+import type {
+  Map,
+  MapType,
+  Coordinates,
+  CharacterPopupData,
+  CharacterInMap,
+} from '../types/types';
 import ContextMenu from './ContextMenu';
+import CharacterPopup from './CharacterPopup';
+import getGnomeCoordsFromDb from '../api/getGnomeCoordsFromDb';
 
 type ImageMapProps = {
   currentGame: Map;
@@ -17,21 +25,28 @@ function ImageMap(props: ImageMapProps) {
 
   const { characters, setCharacters } = useCharacters();
   const [isContextMenuShown, setContextMenuVisibility] = useState(false);
+  const [isPopupShown, setPopupVisibility] = useState(false);
+  const [characterPopupData, setCharacterPopupData] =
+    useState<CharacterPopupData>();
   const [clickedCoordinates, setClickedCoordinates] = useState<Coordinates>();
 
   const mapRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    console.log(characters);
-
     if (characters.every((ch) => ch.isFound)) {
+      // Print winner modal
       console.log('all found');
     }
   }, [characters]);
 
+  const hidePopup = () => setPopupVisibility(false);
+
   const matchCharacterToCoords = async (clickedCharacterId: string) => {
     const characterCoords = await getCoordsFromDB(mapType, clickedCharacterId);
     const DELTA = 3;
+    const targetCharacter = characters.find(
+      (ch) => ch.id === clickedCharacterId,
+    );
 
     if (
       clickedCoordinates &&
@@ -40,7 +55,7 @@ function ImageMap(props: ImageMapProps) {
       isWithinDegrees(DELTA, clickedCoordinates.y, characterCoords.y)
     ) {
       // Set character isFound to true
-      setCharacters(
+      setCharacters(() =>
         characters.map((mapChar) =>
           mapChar.id === clickedCharacterId
             ? {
@@ -51,11 +66,71 @@ function ImageMap(props: ImageMapProps) {
         ),
       );
 
-      //  Print Found
-      console.log(`Found ${clickedCharacterId}`);
+      // Display 'Found character' popup
+      if (targetCharacter) {
+        setPopupVisibility(() => true);
+        setCharacterPopupData(() => ({
+          character: targetCharacter,
+          isFound: true,
+        }));
+      }
     } else {
-      // Print Try Again
-      console.log('try again');
+      // Display 'Try again' popup
+      if (targetCharacter) {
+        setPopupVisibility(() => true);
+        setCharacterPopupData(() => ({
+          character: targetCharacter,
+          isFound: false,
+        }));
+      }
+    }
+  };
+
+  const matchPartyCharacterToCoords = async (clickedCharacterId: string) => {
+    if (clickedCharacterId === 'party-slappy-preview') {
+      await matchCharacterToCoords('party-slappy');
+    } else {
+      const gnomeCoords = await getGnomeCoordsFromDb();
+      const DELTA = 3;
+
+      let targetGnome: CharacterInMap | null = null;
+
+      gnomeCoords?.map((gnome) => {
+        if (
+          clickedCoordinates &&
+          isWithinDegrees(DELTA, clickedCoordinates.x, gnome.x) &&
+          isWithinDegrees(DELTA, clickedCoordinates.y, gnome.y)
+        ) {
+          targetGnome = characters.find(
+            (ch) => ch.id === gnome.id,
+          ) as CharacterInMap;
+        }
+      });
+
+      if (targetGnome) {
+        setCharacters(() =>
+          characters.map((mapChar) =>
+            mapChar.id === targetGnome?.id
+              ? {
+                  ...mapChar,
+                  isFound: true,
+                }
+              : mapChar,
+          ),
+        );
+
+        setPopupVisibility(() => true);
+        setCharacterPopupData(() => ({
+          character: targetGnome,
+          isFound: true,
+        }));
+      } else {
+        setPopupVisibility(() => true);
+        setCharacterPopupData(() => ({
+          character: targetGnome,
+          isFound: false,
+        }));
+      }
     }
   };
 
@@ -91,7 +166,12 @@ function ImageMap(props: ImageMapProps) {
           hideMenu={hideContextMenu}
           clickedCoordinates={clickedCoordinates}
           matchCharacterToCoords={matchCharacterToCoords}
+          matchPartyCharacterToCoords={matchPartyCharacterToCoords}
         />
+      )}
+
+      {isPopupShown && characterPopupData && (
+        <CharacterPopup data={characterPopupData} hidePopup={hidePopup} />
       )}
     </div>
   );
