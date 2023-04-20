@@ -27,3 +27,15 @@ export interface Coordinates {
 }
 
 export type MapType = 'space' | 'street' | 'party';
+
+export interface CharacterPopupData {
+  isFound: boolean;
+  character: CharacterInMap | null;
+}
+
+export interface GnomeCoords {
+  id: string;
+  x: number;
+  y: number;
+  isGnome: boolean;
+}
