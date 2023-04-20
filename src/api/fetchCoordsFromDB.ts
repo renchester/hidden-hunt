@@ -1,7 +1,7 @@
 import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-const getCoordsFromDB = async (mapTitle: string, id: string) => {
+const fetchCoordsFromDB = async (mapTitle: string, id: string) => {
   try {
     const characterRef = doc(db, mapTitle, id);
     const characterSnap = await getDoc(characterRef);
@@ -19,4 +19,4 @@ const getCoordsFromDB = async (mapTitle: string, id: string) => {
   }
 };
 
-export default getCoordsFromDB;
+export default fetchCoordsFromDB;

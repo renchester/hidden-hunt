@@ -15,8 +15,8 @@ import CharacterPopup from './CharacterPopup';
 import Overlay from './Overlay';
 import GameWinModal from './GameWinModal';
 
-import getCoordsFromDB from '../api/getCoordsFromDB';
-import getGnomeCoordsFromDb from '../api/getGnomeCoordsFromDb';
+import fetchCoordsFromDB from '../api/fetchCoordsFromDB';
+import fetchGnomeCoordsFromDB from '../api/fetchGnomeCoordsFromDB';
 import isWithinDegrees from '../utils/isWithinDegrees';
 
 type ImageMapProps = {
@@ -52,7 +52,10 @@ function ImageMap(props: ImageMapProps) {
   const hidePopup = () => setPopupVisibility(false);
 
   const matchCharacterToCoords = async (clickedCharacterId: string) => {
-    const characterCoords = await getCoordsFromDB(mapType, clickedCharacterId);
+    const characterCoords = await fetchCoordsFromDB(
+      mapType,
+      clickedCharacterId,
+    );
     const DELTA = 3;
     const targetCharacter = characters.find(
       (ch) => ch.id === clickedCharacterId,
@@ -100,7 +103,7 @@ function ImageMap(props: ImageMapProps) {
     if (clickedCharacterId === 'party-slappy-preview') {
       await matchCharacterToCoords('party-slappy');
     } else {
-      const gnomeCoords = await getGnomeCoordsFromDb();
+      const gnomeCoords = await fetchGnomeCoordsFromDB();
       const DELTA = 3;
 
       let targetGnome: CharacterInMap | null = null;
@@ -185,11 +188,7 @@ function ImageMap(props: ImageMapProps) {
       )}
 
       {allCharactersFound && (
-        <Overlay>
-          {isGameWinModalShown && (
-            <GameWinModal isWinner={allCharactersFound} />
-          )}
-        </Overlay>
+        <Overlay>{isGameWinModalShown && <GameWinModal />}</Overlay>
       )}
     </div>
   );

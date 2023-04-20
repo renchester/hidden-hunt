@@ -3,7 +3,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import type { GnomeCoords } from '../types/types';
 
-const getGnomeCoordsFromDb = async () => {
+const fetchGnomeCoordsFromDB = async () => {
   try {
     let gnomeCoords: GnomeCoords[] = [];
     const partyRef = collection(db, 'party');
@@ -30,4 +30,4 @@ const getGnomeCoordsFromDb = async () => {
   }
 };
 
-export default getGnomeCoordsFromDb;
+export default fetchGnomeCoordsFromDB;
