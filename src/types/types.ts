@@ -1,3 +1,5 @@
+import type { Timestamp } from 'firebase/firestore';
+
 export interface Character {
   id: string;
   name: string;
@@ -11,11 +13,12 @@ export interface CharacterInMap extends Character {
 
 export interface Map {
   id: string;
-  type: string;
+  type: MapType;
   title: string;
   imgSource: string;
   creator: string;
   creatorLink: string;
+  difficulty: string;
   instructions: string;
   characters: Character[];
   previewCharacters?: Character[];
@@ -46,4 +49,10 @@ export interface TimeLapsed {
   minutes: number;
   seconds: number;
   centiseconds: number;
+}
+
+export interface LeaderboardData {
+  timeLapsed: number;
+  name: string;
+  dateCreated: Timestamp;
 }
