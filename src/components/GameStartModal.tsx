@@ -15,14 +15,14 @@ function GameStartModal(props: GameStartModalProps) {
   const renderProfile = (character: Character) => (
     <li
       key={`${character.id}--start-modal`}
-      className="flex-shrink-0 w-[120px]"
+      className="flex-shrink-0 w-[120px] flex flex-col items-center"
     >
       <img
         src={character.img}
         alt={`Character profile for ${character.name}`}
-        className="aspect-square object-cover rounded-lg shadow-sm shadow-gray-400 outline outline-[4px] outline-amber-50 mb-1"
+        className="aspect-square object-cover rounded-lg shadow-sm shadow-gray-400 outline outline-[4px] outline-amber-50 mb-1 xs:w-[40px]"
       />
-      <p className="text-center text-sm leading-4 font-montserrat tracking-wide font-bold text-gray-700">
+      <p className="text-center text-sm leading-4 font-montserrat tracking-wide font-bold text-gray-700 xs:text-xs">
         {character.isGnome ? `12 Gnomes` : character.name}
       </p>
     </li>
@@ -30,7 +30,7 @@ function GameStartModal(props: GameStartModalProps) {
 
   return (
     <div
-      className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-8 px-10 rounded-xl text-center font-inter shadow-lg shadow-gray-500"
+      className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-8 px-10 rounded-xl text-center font-inter shadow-lg shadow-gray-500 xs:text-xs xs:w-full xs:px-4"
       aria-label="Modal to start game"
       aria-modal
     >
@@ -38,7 +38,7 @@ function GameStartModal(props: GameStartModalProps) {
         {currentGame.title}
       </h1>
       <h2 className="mb-5">{currentGame.instructions}</h2>
-      <ul className="flex flex-wrap justify-center gap-6 min-w-[400px] mb-10">
+      <ul className="flex flex-wrap justify-center gap-6 min-w-[300px] mb-10 xs:gap-1">
         {currentGame.type === 'party'
           ? currentGame.previewCharacters?.map((ch) => renderProfile(ch))
           : currentGame.characters.map((ch) => renderProfile(ch))}

@@ -34,7 +34,8 @@ function GameWinModal() {
 
   return (
     <div
-      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 p-10 rounded-lg text-center"
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 p-10 rounded-lg text-center md:w-3/4"
+      aria-label="Modal to display Congratulations for finding all characters"
       aria-modal
     >
       {isPosted ? (

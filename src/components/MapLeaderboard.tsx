@@ -42,11 +42,13 @@ function MapLeaderboard() {
               <th scope="col" className="text-center font-bold py-1">
                 Rank
               </th>
-              <th scope="col" className="text-left font-bold py-1">
+              <th scope="col" className="text-left font-bold py-1 md:pl-2">
                 Name
               </th>
-              <th scope="col" className="text-center font-bold py-1">
-                Time(seconds)
+              <th scope="col" className="text-center font-bold py-1 leading-3">
+                Time
+                <br />
+                <span className="text-xs font-normal">(seconds)</span>
               </th>
               <th scope="col" className="text-left font-bold py-1 pl-8">
                 Date
@@ -61,12 +63,14 @@ function MapLeaderboard() {
                   key={`${entry.name}-${entry.dateCreated.toString()}--lb`}
                   className=" even:bg-gray-100 last-of-type:border-b border-solid border-black"
                 >
-                  <td className="text-center py-5 w-1/5">{index + 1}</td>
-                  <td className="w-1/3">{entry.name}</td>
-                  <td className="font-roboto text-center w-1/5">
+                  <td className="text-center py-5 w-1/5 md:w-fit md:pl-2">
+                    {index + 1}
+                  </td>
+                  <td className="w-1/3 md:w-fit">{entry.name}</td>
+                  <td className="font-roboto text-center w-1/5 md:w-fit">
                     {timeInSeconds}
                   </td>
-                  <td className="pl-8">
+                  <td className="pl-8 md:pb-4 md:w-fit">
                     {format(entry.dateCreated?.toDate(), 'MMM dd, yyyy')}
                   </td>
                 </tr>

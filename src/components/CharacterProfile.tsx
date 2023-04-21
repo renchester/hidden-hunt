@@ -12,7 +12,7 @@ function CharacterProfile(props: CharacterProfileType) {
       <img
         src={character.img}
         alt={`Character profile for ${character.name}`}
-        className="w-[50px] h-[50px] object-cover rounded-full border-2 border-white border-solid group-hover:border-black group-hover:border-0"
+        className="w-[50px] h-[50px] object-cover rounded-full border-2 border-white border-solid group-hover:border-black group-hover:border-0 md:group-hover:border-white md:group-hover:border-2"
       />
       <h4 className="text-left text-md w-2/3 font-raleway tracking-tight">
         {character.name}

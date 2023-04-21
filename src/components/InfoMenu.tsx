@@ -69,11 +69,16 @@ function InfoMenu(props: InfoMenuProps) {
   };
 
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-10 p-10 bg-white rounded-lg text-black shadow-blue-200 shadow-md">
+    <div
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-10 p-10 bg-white rounded-lg text-black shadow-blue-200 shadow-md md:w-3/4 xs:w-full"
+      aria-modal
+      aria-label="Information Modal on Characters to find"
+    >
       <button
         type="button"
         onClick={hideInfoMenu}
         className="absolute top-0 right-0 m-3 font-montserrat bg-gray-500 hover:bg-red-800 focus:bg-red-800 focus:outline-none rounded-full text-white font-extrabold aspect-square h-6 w-6"
+        aria-label="Close info modal"
       >
         x
       </button>

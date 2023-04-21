@@ -26,7 +26,7 @@ function CharacterPopup(props: CharacterPopupProps) {
 
   return (
     <div
-      className={`${backgroundColor} fixed top-36 z-50 mx-auto px-10 py-2 text-white left-1/2 -translate-x-1/2 rounded-lg border border-solid border-white font-inter font-extrabold`}
+      className={`${backgroundColor} fixed top-36 z-50 mx-auto px-10 py-2 text-white left-1/2 -translate-x-1/2 rounded-lg border border-solid border-white font-inter font-extrabold md:px-2 bg-opacity-80`}
       role="alert"
       aria-live="assertive"
     >
