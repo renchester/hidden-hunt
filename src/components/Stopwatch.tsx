@@ -21,10 +21,10 @@ function Stopwatch(props: StopwatchProps) {
   const formatTime = (timeStr: number) => timeStr.toString().padStart(2, '0');
 
   return (
-    <div>
+    <span className="text-2xl" role="timer" aria-label="Game stopwatch timer">
       {hours > 0 && `${formatTime(hours)}:`}
-      {formatTime(minutes)}:{formatTime(seconds)}:{formatTime(centiseconds)}
-    </div>
+      {formatTime(minutes)}:{formatTime(seconds)}.{formatTime(centiseconds)}
+    </span>
   );
 }
 export default Stopwatch;

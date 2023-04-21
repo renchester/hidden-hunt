@@ -20,15 +20,17 @@ function ContextMenuItem(props: ContextMenuItemProps) {
   return (
     <button
       type="button"
-      className="flex hover:bg-yellow-300 w-full"
+      className="flex hover:bg-rose-700 w-full p-2 gap-1"
       onClick={handleClick}
     >
       <img
         src={character.img}
         alt={`Character profile for ${character.name}`}
-        className="w-[15px] h-[15px]"
+        className="w-[25px] h-[25px] rounded-full"
       />
-      <p aria-label="Character name">{character.name}</p>
+      <p aria-label="Character name" className="text-left max-w-[170px]">
+        {character.name}
+      </p>
     </button>
   );
 }

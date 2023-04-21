@@ -12,7 +12,11 @@ function CharacterPopup(props: CharacterPopupProps) {
   const popupMessage =
     data.isFound && data.character
       ? `You found ${data.character.name}`
-      : 'Try again';
+      : `Try again. ${
+          data.character?.name || 'The character you chose'
+        } is not there `;
+
+  const backgroundColor = data.isFound ? 'bg-green-600' : 'bg-red-700';
 
   useEffect(() => {
     const popupTimeout = setTimeout(hidePopup, 3500);
@@ -21,7 +25,11 @@ function CharacterPopup(props: CharacterPopupProps) {
   }, []);
 
   return (
-    <div className="fixed top-36 z-60 mx-auto bg-green-600 px-10 py-2 text-white left-1/2 -translate-x-1/2 ">
+    <div
+      className={`${backgroundColor} fixed top-36 z-50 mx-auto px-10 py-2 text-white left-1/2 -translate-x-1/2 rounded-lg border border-solid border-white font-inter font-extrabold`}
+      role="alert"
+      aria-live="assertive"
+    >
       {popupMessage}
     </div>
   );

@@ -33,26 +33,57 @@ function GameWinModal() {
   };
 
   return (
-    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-10">
+    <div
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 p-10 rounded-lg text-center"
+      aria-modal
+    >
       {isPosted ? (
-        <Link to={`/leaderboard/${mapType}`}>Check out the leaderboard</Link>
+        <div className="flex flex-col gap-5">
+          <Link
+            to={`/leaderboard/${mapType}`}
+            className="px-4 py-2 rounded-md font-inter font-extrabold bg-rose-500 text-white"
+          >
+            Check out the leaderboard
+          </Link>
+          <Link
+            to={'/'}
+            className="px-4 py-2 rounded-md font-inter font-extrabold bg-green-600 text-white"
+          >
+            Go back home
+          </Link>
+        </div>
       ) : (
         <>
-          <h1>Congratulations! You found all the characters!</h1>
-          <form action="" onSubmit={handleSubmit} ref={formRef}>
+          <h1 className="text-2xl font-inter font-extrabold">
+            Congratulations! You found all the characters!
+          </h1>
+          <form
+            action=""
+            onSubmit={handleSubmit}
+            ref={formRef}
+            className="flex flex-col justify-center items-center gap-2 mt-2"
+          >
             <label htmlFor="userName">
               Enter your name below to be added to the leaderboard!
-              <input
-                type="text"
-                name="userName"
-                id="userName"
-                placeholder="Enter your name here"
-                minLength={1}
-                onChange={handleNameChange}
-                value={name}
-              />
             </label>
-            <button type="submit">Submit to leaderboard</button>
+            <input
+              type="text"
+              name="userName"
+              id="userName"
+              placeholder="Enter your name here"
+              minLength={1}
+              maxLength={50}
+              required
+              onChange={handleNameChange}
+              value={name}
+              className="bg-transparent placeholder:text-gray-600 px-2 py-1 w-2/3 focus:outline-none focus:bg-gray-50 border-b-2 border-b-black mb-3"
+            />
+            <button
+              type="submit"
+              className="px-4 py-1 bg-green-600 w-fit rounded-lg font-inter font-bold text-white"
+            >
+              Submit to leaderboard
+            </button>
           </form>
         </>
       )}

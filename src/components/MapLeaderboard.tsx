@@ -1,7 +1,12 @@
-import { useLoaderData, type LoaderFunctionArgs } from 'react-router-dom';
+import {
+  useLoaderData,
+  type LoaderFunctionArgs,
+  useParams,
+} from 'react-router-dom';
 import format from 'date-fns/format';
 import fetchLeaderboardFromDB from '../api/fetchLeaderboardFromDB';
 import type { LeaderboardData, MapType } from '../types/types';
+import gameData from '../data/gameData';
 
 export const mapLeaderboardLoader = async ({ params }: LoaderFunctionArgs) => {
   const mapType = (params['mapType'] as MapType) || 'space';
@@ -12,6 +17,8 @@ export const mapLeaderboardLoader = async ({ params }: LoaderFunctionArgs) => {
 
 function MapLeaderboard() {
   const leaderboardData = useLoaderData() as LeaderboardData[];
+  const { mapType } = useParams() as { mapType: MapType };
+
   const formatSeconds = (time: number) => {
     const seconds = (time / 1000).toString();
     const [integer, decimal] = seconds.split('.');
@@ -21,27 +28,47 @@ function MapLeaderboard() {
     return `${integer || '0'}.${formattedDecimal}`;
   };
 
+  const mapTitle = gameData.find((map) => map.type === mapType)?.title;
+
   return (
     <>
+      <h1 className="text-center font-extrabold font-inter uppercase mt-10 mb-6">
+        {mapTitle}
+      </h1>
       {leaderboardData.length > 0 && leaderboardData[0] ? (
-        <table>
-          <thead>
+        <table className="max-w-[1200px] mx-auto font-inter border-collapse w-full mb-20">
+          <thead className="border-y border-solid border-black">
             <tr>
-              <th scope="col">Rank</th>
-              <th scope="col">Name</th>
-              <th scope="col">Time(seconds)</th>
-              <th scope="col">Date</th>
+              <th scope="col" className="text-center font-bold py-1">
+                Rank
+              </th>
+              <th scope="col" className="text-left font-bold py-1">
+                Name
+              </th>
+              <th scope="col" className="text-center font-bold py-1">
+                Time(seconds)
+              </th>
+              <th scope="col" className="text-left font-bold py-1 pl-8">
+                Date
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {leaderboardData.map((entry, index) => {
               const timeInSeconds = formatSeconds(entry.timeLapsed);
               return (
-                <tr key={`${entry.name}-${entry.dateCreated.toString()}--lb`}>
-                  <td>{index + 1}</td>
-                  <td>{entry.name}</td>
-                  <td>{timeInSeconds}</td>
-                  <td>{format(entry.dateCreated?.toDate(), 'MMM dd, yyyy')}</td>
+                <tr
+                  key={`${entry.name}-${entry.dateCreated.toString()}--lb`}
+                  className=" even:bg-gray-100 last-of-type:border-b border-solid border-black"
+                >
+                  <td className="text-center py-5 w-1/5">{index + 1}</td>
+                  <td className="w-1/3">{entry.name}</td>
+                  <td className="font-roboto text-center w-1/5">
+                    {timeInSeconds}
+                  </td>
+                  <td className="pl-8">
+                    {format(entry.dateCreated?.toDate(), 'MMM dd, yyyy')}
+                  </td>
                 </tr>
               );
             })}

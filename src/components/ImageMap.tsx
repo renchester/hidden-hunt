@@ -18,6 +18,7 @@ import GameWinModal from './GameWinModal';
 import fetchCoordsFromDB from '../api/fetchCoordsFromDB';
 import fetchGnomeCoordsFromDB from '../api/fetchGnomeCoordsFromDB';
 import isWithinDegrees from '../utils/isWithinDegrees';
+import FoundMarkers from './FoundMarkers';
 
 type ImageMapProps = {
   currentGame: Map;
@@ -32,6 +33,7 @@ function ImageMap(props: ImageMapProps) {
   const [isContextMenuShown, setContextMenuVisibility] = useState(false);
   const [isPopupShown, setPopupVisibility] = useState(false);
   const [isGameWinModalShown, setGameWinModalVisibility] = useState(false);
+  const [foundMarkers, setFoundMarkers] = useState<Coordinates[]>([]);
   const [allCharactersFound, setAllCharactersFound] = useState(false);
 
   const [characterPopupData, setCharacterPopupData] =
@@ -78,6 +80,8 @@ function ImageMap(props: ImageMapProps) {
             : mapChar,
         ),
       );
+
+      setFoundMarkers((prevMarkers) => [...prevMarkers, clickedCoordinates]);
 
       // Display 'Found character' popup
       if (targetCharacter) {
@@ -132,6 +136,12 @@ function ImageMap(props: ImageMapProps) {
           ),
         );
 
+        setFoundMarkers((prevMarkers) => {
+          if (clickedCoordinates) {
+            return [...prevMarkers, clickedCoordinates];
+          }
+          return prevMarkers;
+        });
         setPopupVisibility(() => true);
         setCharacterPopupData(() => ({
           character: targetGnome,
@@ -170,7 +180,7 @@ function ImageMap(props: ImageMapProps) {
         ref={mapRef}
         src={currentGame.imgSource}
         alt={`Map for ${currentGame.title}`}
-        className="mx-auto"
+        className="w-full"
         onClick={handleImageClick}
       />
 
@@ -190,6 +200,11 @@ function ImageMap(props: ImageMapProps) {
       {allCharactersFound && (
         <Overlay>{isGameWinModalShown && <GameWinModal />}</Overlay>
       )}
+
+      {foundMarkers.length > 0 &&
+        foundMarkers.map((marker) => (
+          <FoundMarkers markerCoords={marker} key={`${marker.x}-${marker.y}`} />
+        ))}
     </div>
   );
 }

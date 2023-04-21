@@ -48,23 +48,40 @@ function InfoMenu(props: InfoMenuProps) {
 
   const renderCharactersInfo = () => {
     return characters.map((ch) => (
-      <li key={`${ch.id}--info-menu`} className="flex flex-col">
-        <img src={ch.img} alt="" className="w-16" />
-        <p>{ch.name}</p>
+      <li
+        key={`${ch.id}--info-menu`}
+        className="flex flex-col items-center w-16"
+      >
+        <img
+          src={ch.img}
+          alt={`Character profile for ${ch.name}`}
+          className="aspect-square object-cover rounded-lg"
+        />
+        <p
+          className={`${
+            ch.isFound ? 'line-through text-gray-500' : ''
+          } font-inter text-center text-sm tracking-wide `}
+        >
+          {ch.name}
+        </p>
       </li>
     ));
   };
 
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-10 p-10 bg-purple-300 ">
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-10 p-10 bg-white rounded-lg text-black shadow-blue-200 shadow-md">
       <button
         type="button"
         onClick={hideInfoMenu}
-        className="absolute top-0 right-0"
+        className="absolute top-0 right-0 m-3 font-montserrat bg-gray-500 hover:bg-red-800 focus:bg-red-800 focus:outline-none rounded-full text-white font-extrabold aspect-square h-6 w-6"
       >
-        X
+        x
       </button>
-      <ul className="flex">
+
+      <h1 className="text-2xl font-inter font-extrabold text-rose-500 mb-3">
+        Characters to find
+      </h1>
+      <ul className="flex flex-wrap gap-10 justify-center">
         {mapType === 'party'
           ? renderPartyCharactersInfo()
           : renderCharactersInfo()}

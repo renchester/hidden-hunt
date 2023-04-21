@@ -58,7 +58,7 @@ function ContextMenu(props: ContextMenuProps) {
         role="menu"
         aria-expanded="true"
         aria-orientation="vertical"
-        className="absolute z-10 bg-white w-fit"
+        className="absolute z-10 bg-black bg-opacity-80 text-white w-fit font-montserrat text-sm"
         style={menuStyle}
       >
         <ul className="flex flex-col">
@@ -82,7 +82,11 @@ function ContextMenu(props: ContextMenuProps) {
                 </li>
               ))}
         </ul>
-        <button type="button" onClick={hideMenu}>
+        <button
+          type="button"
+          onClick={hideMenu}
+          className="hover:bg-rose-700 w-full py-2 text-xs uppercase"
+        >
           Hide Menu
         </button>
       </div>
