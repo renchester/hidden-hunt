@@ -11,6 +11,7 @@ import HeaderInGame from '../components/HeaderInGame';
 
 import { type CharacterInMap, type Map, type MapType } from '../types/types';
 import gameData from '../data/gameData';
+import ErrorPage from './ErrorPage';
 
 function GamePage() {
   const { mapType } = useParams<{ mapType: MapType }>();
@@ -33,10 +34,11 @@ function GamePage() {
 
   return (
     <TimeLapsedProvider>
+      {!currentGame && <ErrorPage />}
       {currentGame && mapType && mapCharacters && (
         <CharacterProvider mapCharacters={mapCharacters}>
           <HeaderInGame isGameStart={isGameStart} />
-          <main className="mx-auto">
+          <main className="mx-auto min-h-[80vh]">
             <ImageMap currentGame={currentGame} mapType={mapType} />
           </main>
         </CharacterProvider>
