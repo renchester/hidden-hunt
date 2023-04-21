@@ -25,6 +25,7 @@ const gameData: Map[] = [
     imgSource: spaceMap,
     creator: 'Rod Hunt',
     creatorLink: 'https://rodhunt.com/illustration',
+    difficulty: 'Easy',
     instructions: 'Find the following characters',
     characters: [
       {
@@ -51,6 +52,7 @@ const gameData: Map[] = [
     imgSource: streetMap,
     creator: 'Rod Hunt',
     creatorLink: 'https://rodhunt.com/illustration',
+    difficulty: 'Medium',
     instructions: 'Find the following characters',
     characters: [
       {
@@ -87,6 +89,7 @@ const gameData: Map[] = [
     imgSource: partyMap,
     creator: 'Rod Hunt',
     creatorLink: 'https://rodhunt.com/illustration',
+    difficulty: 'Hard',
     instructions:
       'Find Slappy the Dummy and all the gnomes! Beware, there are several gnome impersonators in this party',
     characters: [
