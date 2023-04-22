@@ -32,8 +32,8 @@ function MapLeaderboard() {
 
   return (
     <>
-      <h1 className="text-center font-extrabold font-inter uppercase mt-10 mb-6">
-        {mapTitle}
+      <h1 className="text-center font-extrabold font-inter uppercase mt-10 mb-6 text-amber-700">
+        {mapTitle} Leaderboard
       </h1>
       {leaderboardData.length > 0 && leaderboardData[0] ? (
         <table className="max-w-[1200px] mx-auto font-inter border-collapse w-full mb-20">

@@ -7,6 +7,7 @@ function Header() {
         <Link
           to="/"
           className="flex flex-col gap-2 text-center font-inter pl-2"
+          aria-label="Link to Home Page"
         >
           <h1 className="text-3xl font-inter font-extrabold leading-6 text-amber-400">
             Hidden Hunt
@@ -16,6 +17,7 @@ function Header() {
         <Link
           to="/leaderboard"
           className="block font-inter font-bold uppercase text-xs tracking-[2.5px]  hover:border-y-4 border-y-amber-400 border-solid py-2 hover:text-amber-400 underline-offset-4"
+          aria-label="Link to Leaderboard Page"
         >
           Leaderboard
         </Link>

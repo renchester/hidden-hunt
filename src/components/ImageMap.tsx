@@ -176,8 +176,11 @@ function ImageMap(props: ImageMapProps) {
   const hideContextMenu = () => setContextMenuVisibility(false);
 
   return (
-    <div className="relative" onBlur={hideContextMenu}>
-      <div className="expandable absolute"></div>
+    <section
+      className="relative"
+      onBlur={hideContextMenu}
+      aria-label="Image map section"
+    >
       <img
         ref={mapRef}
         src={currentGame.imgSource}
@@ -204,10 +207,12 @@ function ImageMap(props: ImageMapProps) {
       {allCharactersFound && (
         <Overlay>
           {isGameWin && (
-            <AnimatePresence>
-              <GameWinModal />
+            <>
+              <AnimatePresence>
+                <GameWinModal />
+              </AnimatePresence>
               <Confetti />
-            </AnimatePresence>
+            </>
           )}
         </Overlay>
       )}
@@ -216,7 +221,7 @@ function ImageMap(props: ImageMapProps) {
         foundMarkers.map((marker) => (
           <FoundMarkers markerCoords={marker} key={`${marker.x}-${marker.y}`} />
         ))}
-    </div>
+    </section>
   );
 }
 export default ImageMap;

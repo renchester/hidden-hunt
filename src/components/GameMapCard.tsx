@@ -12,7 +12,7 @@ function GameMapCard(props: GameMapCardProps) {
 
   return (
     <article aria-labelledby="map-title" className="relative group font-inter">
-      <Link to={map.type} className="">
+      <Link to={map.type} aria-label={`Link to ${map.title} map`}>
         <img
           src={map.imgSource}
           alt={`Preview for ${map.title}`}
@@ -28,7 +28,7 @@ function GameMapCard(props: GameMapCardProps) {
           <h2 id="map-title" className="font-extrabold text-4xl text-left mb-1">
             {map.title}
           </h2>
-          <h3 className="mb-4 text-left text-sm ">
+          <h3 className="mb-4 text-left text-sm">
             by{' '}
             <a
               href={map.creatorLink}
@@ -39,9 +39,12 @@ function GameMapCard(props: GameMapCardProps) {
               {map.creator}
             </a>
           </h3>
-          <div className="text-sm  bg-yellow-400 text-black w-fit px-2 py-1 rounded-md  font-semibold mb-10 group-hover:bg-orange-700 group-hover:text-white md:group-hover:bg-yellow-400 md:group-hover:text-black">
+          <h3
+            className="text-sm  bg-yellow-400 text-black w-fit px-2 py-1 rounded-md  font-semibold mb-10 group-hover:bg-orange-700 group-hover:text-white md:group-hover:bg-yellow-400 md:group-hover:text-black"
+            aria-label="Map difficulty"
+          >
             {map.difficulty}
-          </div>
+          </h3>
           <p className="text-sm mb-4 font-raleway">{map.instructions}</p>
           <ul className="flex flex-col gap-6 justify-center px-2">
             {map.type === 'party'
