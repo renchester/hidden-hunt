@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { useCharacters } from '../hooks/useCharacters';
 
 import InfoMenu from './InfoMenu';
@@ -44,15 +45,18 @@ function HeaderInGame(props: HeaderInGameProps) {
 
         <Link
           to="/leaderboard"
-          className="block font-inter uppercase text-sm tracking-wider hover:underline underline-offset-4 sm:text-xs xs:text-[0.65rem]"
+          className="block font-inter uppercase text-xs tracking-widest underline-offset-4 sm:text-xs xs:text-[0.65rem]
+          font-bold hover:border-y-4 border-y-amber-400 border-solid py-2 hover:text-amber-400"
         >
           Leaderboard
         </Link>
       </div>
 
-      {isGameStart && isInfoMenuShown && (
-        <InfoMenu hideInfoMenu={hideInfoMenu} />
-      )}
+      <AnimatePresence>
+        {isGameStart && isInfoMenuShown && (
+          <InfoMenu hideInfoMenu={hideInfoMenu} />
+        )}
+      </AnimatePresence>
     </header>
   );
 }

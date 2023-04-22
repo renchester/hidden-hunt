@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import Confetti from 'react-confetti';
 import type {
   Map,
   MapType,
@@ -32,7 +34,7 @@ function ImageMap(props: ImageMapProps) {
   const { characters, setCharacters } = useCharacters();
   const [isContextMenuShown, setContextMenuVisibility] = useState(false);
   const [isPopupShown, setPopupVisibility] = useState(false);
-  const [isGameWinModalShown, setGameWinModalVisibility] = useState(false);
+  const [isGameWin, setGameWin] = useState(false);
   const [foundMarkers, setFoundMarkers] = useState<Coordinates[]>([]);
   const [allCharactersFound, setAllCharactersFound] = useState(false);
 
@@ -47,7 +49,7 @@ function ImageMap(props: ImageMapProps) {
       // Print winner modal
       clearStopwatchInterval();
       setAllCharactersFound(true);
-      setGameWinModalVisibility(true);
+      setGameWin(true);
     }
   }, [characters]);
 
@@ -193,12 +195,21 @@ function ImageMap(props: ImageMapProps) {
         />
       )}
 
-      {isPopupShown && characterPopupData && (
-        <CharacterPopup data={characterPopupData} hidePopup={hidePopup} />
-      )}
+      <AnimatePresence>
+        {isPopupShown && characterPopupData && (
+          <CharacterPopup data={characterPopupData} hidePopup={hidePopup} />
+        )}
+      </AnimatePresence>
 
       {allCharactersFound && (
-        <Overlay>{isGameWinModalShown && <GameWinModal />}</Overlay>
+        <Overlay>
+          {isGameWin && (
+            <AnimatePresence>
+              <GameWinModal />
+              <Confetti />
+            </AnimatePresence>
+          )}
+        </Overlay>
       )}
 
       {foundMarkers.length > 0 &&

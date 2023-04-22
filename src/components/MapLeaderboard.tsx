@@ -39,18 +39,27 @@ function MapLeaderboard() {
         <table className="max-w-[1200px] mx-auto font-inter border-collapse w-full mb-20">
           <thead className="border-y border-solid border-black">
             <tr>
-              <th scope="col" className="text-center font-bold py-1">
+              <th scope="col" className="text-center font-bold py-1 align-top">
                 Rank
               </th>
-              <th scope="col" className="text-left font-bold py-1 md:pl-2">
+              <th
+                scope="col"
+                className="text-left font-bold py-1 md:pl-2 align-top"
+              >
                 Name
               </th>
-              <th scope="col" className="text-center font-bold py-1 leading-3">
+              <th
+                scope="col"
+                className="text-center font-bold py-1 leading-3 align-top"
+              >
                 Time
                 <br />
                 <span className="text-xs font-normal">(seconds)</span>
               </th>
-              <th scope="col" className="text-left font-bold py-1 pl-8">
+              <th
+                scope="col"
+                className="text-left font-bold py-1 pl-8 align-top"
+              >
                 Date
               </th>
             </tr>

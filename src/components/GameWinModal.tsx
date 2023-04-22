@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useTime } from '../hooks/useTime';
 import postLeaderboardEntry from '../api/postLeaderboardEntry';
 import type { MapType } from '../types/types';
@@ -33,10 +34,12 @@ function GameWinModal() {
   };
 
   return (
-    <div
-      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 p-10 rounded-lg text-center md:w-3/4"
+    <motion.div
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-amber-400 p-10 rounded-lg text-center md:w-3/4 z-20"
       aria-label="Modal to display Congratulations for finding all characters"
       aria-modal
+      initial={{ y: -200, opacity: 0, translate: '-50% -50%' }}
+      animate={{ y: 0, opacity: 1 }}
     >
       {isPosted ? (
         <div className="flex flex-col gap-5">
@@ -88,7 +91,7 @@ function GameWinModal() {
           </form>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
 export default GameWinModal;

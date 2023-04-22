@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import type { CharacterPopupData } from '../types/types';
 
 type CharacterPopupProps = {
@@ -25,13 +26,16 @@ function CharacterPopup(props: CharacterPopupProps) {
   }, []);
 
   return (
-    <div
-      className={`${backgroundColor} fixed top-36 z-50 mx-auto px-10 py-2 text-white left-1/2 -translate-x-1/2 rounded-lg border border-solid border-white font-inter font-extrabold md:px-2 bg-opacity-80`}
+    <motion.div
+      className={`${backgroundColor} fixed top-36 z-50 mx-auto px-10 py-2 text-white left-1/2 rounded-md border border-solid border-white font-inter font-extrabold md:px-2 bg-opacity-90`}
       role="alert"
       aria-live="assertive"
+      initial={{ y: -200, opacity: 0, translateX: '-50%' }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -100, opacity: 0 }}
     >
       {popupMessage}
-    </div>
+    </motion.div>
   );
 }
 

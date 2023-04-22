@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useCharacters } from '../hooks/useCharacters';
 import type { Character, MapType } from '../types/types';
 import gameData from '../data/gameData';
@@ -20,18 +21,35 @@ function InfoMenu(props: InfoMenuProps) {
 
     if (previewChar.isGnome) {
       return (
-        <li key={`${previewChar.id}--info-menu`} className="flex flex-col">
-          <img src={previewChar.img} alt="" className="w-16" />
-          <p>
-            {gnomesToBeFound > 0 && gnomesToBeFound} {previewChar.name}
+        <li
+          key={`${previewChar.id}--info-menu`}
+          className="flex flex-col items-center justify-center w-16"
+        >
+          <img
+            src={previewChar.img}
+            alt="Character profile for gnomes"
+            className="aspect-square object-cover rounded-lg"
+          />
+          <p className="font-inter text-center text-sm tracking-wide">
+            {gnomesToBeFound > 0 && gnomesToBeFound}
+            {gnomesToBeFound === 1 ? ' Gnome' : ' Gnomes'}
           </p>
         </li>
       );
     }
     return (
-      <li key={`${previewChar.id}--info-menu`} className="flex flex-col">
-        <img src={previewChar.img} alt="" className="w-16" />
-        <p>{previewChar.name}</p>
+      <li
+        key={`${previewChar.id}--info-menu`}
+        className="flex flex-col items-center justify-center w-16"
+      >
+        <img
+          src={previewChar.img}
+          alt=""
+          className="aspect-square object-cover rounded-lg"
+        />
+        <p className="font-inter text-center text-sm tracking-wide">
+          {previewChar.name}
+        </p>
       </li>
     );
   };
@@ -50,7 +68,7 @@ function InfoMenu(props: InfoMenuProps) {
     return characters.map((ch) => (
       <li
         key={`${ch.id}--info-menu`}
-        className="flex flex-col items-center w-16"
+        className="flex flex-col items-center justify-center w-16"
       >
         <img
           src={ch.img}
@@ -69,10 +87,13 @@ function InfoMenu(props: InfoMenuProps) {
   };
 
   return (
-    <div
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-10 p-10 bg-white rounded-lg text-black shadow-blue-200 shadow-md md:w-3/4 xs:w-full"
+    <motion.div
+      className="absolute top-full left-1/2 mt-10 p-10 bg-white rounded-lg text-black shadow-blue-200 shadow-md md:w-3/4 xs:w-full"
       aria-modal
       aria-label="Information Modal on Characters to find"
+      initial={{ y: -100, opacity: 0, translateX: '-50%' }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -100, opacity: 0 }}
     >
       <button
         type="button"
@@ -91,7 +112,7 @@ function InfoMenu(props: InfoMenuProps) {
           ? renderPartyCharactersInfo()
           : renderCharactersInfo()}
       </ul>
-    </div>
+    </motion.div>
   );
 }
 

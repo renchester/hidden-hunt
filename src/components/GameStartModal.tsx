@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import type { Character, Map } from '../types/types';
 
 type GameStartModalProps = {
@@ -29,10 +30,17 @@ function GameStartModal(props: GameStartModalProps) {
   );
 
   return (
-    <div
-      className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col py-8 px-10 rounded-xl text-center font-inter shadow-lg shadow-gray-500 xs:text-xs xs:w-full xs:px-4"
+    <motion.div
+      key="game-start-modal-div"
+      className="absolute top-[50%] left-[50%] bg-white flex flex-col py-8 px-10 rounded-xl text-center font-inter shadow-lg shadow-gray-500 xs:text-xs xs:w-full xs:px-4"
       aria-label="Modal to start game"
       aria-modal
+      initial={{ y: -200, opacity: 0, translate: '-50% -50%' }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        y: { duration: 0.75 },
+      }}
     >
       <h1 className="font-inter text-3xl font-extrabold text-rose-600 mb-1">
         {currentGame.title}
@@ -62,7 +70,7 @@ function GameStartModal(props: GameStartModalProps) {
           GO BACK
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 export default GameStartModal;
