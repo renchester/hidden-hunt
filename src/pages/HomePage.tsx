@@ -6,6 +6,10 @@ import gameData from '../data/gameData';
 import heroChooseImg from '../assets/img/hero-choose.webp';
 
 function HomePage() {
+  useEffect(() => {
+    document.title = 'Home Page - Hidden Hunt';
+  }, []);
+
   return (
     <>
       <Header />

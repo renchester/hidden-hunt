@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import gameData from '../data/gameData';
 
 function LeaderboardPage() {
+  useEffect(() => {
+    document.title = 'Leaderboards - Hidden Hunt';
+  }, []);
+
   return (
     <>
       <Header />

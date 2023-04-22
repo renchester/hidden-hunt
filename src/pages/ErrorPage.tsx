@@ -1,8 +1,14 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 function ErrorPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = '404 Error - Hidden Hunt';
+  }, []);
+
   return (
     <>
       <Header />

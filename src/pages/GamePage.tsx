@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 
 import { CharacterProvider } from '../hooks/useCharacters';
 import { TimeLapsedProvider } from '../hooks/useTime';
@@ -19,6 +20,12 @@ function GamePage() {
   const [currentGame, setCurrentGame] = useState<Map | null>(null);
   const [isGameStart, setGameStart] = useState(false);
   const [mapCharacters, setMapCharacters] = useState<CharacterInMap[]>();
+
+  useEffect(() => {
+    document.title = `${
+      mapType?.toUpperCase() || 'New Game'
+    } Map - Hidden Hunt`;
+  }, []);
 
   useEffect(() => {
     const target = gameData.find((map) => map.type === mapType);
@@ -43,14 +50,17 @@ function GamePage() {
           </main>
         </CharacterProvider>
       )}
-      {currentGame && !isGameStart && (
-        <Overlay>
-          <GameStartModal
-            currentGame={currentGame}
-            setGameStart={setGameStart}
-          />
-        </Overlay>
-      )}
+      <AnimatePresence>
+        {currentGame && !isGameStart && (
+          <Overlay>
+            <GameStartModal
+              key="game-start-modal"
+              currentGame={currentGame}
+              setGameStart={setGameStart}
+            />
+          </Overlay>
+        )}
+      </AnimatePresence>
     </TimeLapsedProvider>
   );
 }
